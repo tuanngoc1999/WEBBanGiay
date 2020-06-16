@@ -1,12 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QLBANGIAY" Class="dbShopGiayDataContextDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=MaiTuan;Initial Catalog=QLBANGIAY;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="QLBANGIAYConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.ADMIN" Member="ADMINs">
-    <Type Name="ADMIN">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="pwd" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="tenacc" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.CHITIETDONTHANG" Member="CHITIETDONTHANGs">
     <Type Name="CHITIETDONTHANG">
       <Column Name="MaDonHang" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -72,6 +65,13 @@
       <Association Name="GIAY_CHITIETDONTHANG" Member="CHITIETDONTHANGs" ThisKey="MaGiay" OtherKey="MaGiay" Type="CHITIETDONTHANG" />
       <Association Name="LOAIGIAY_GIAY" Member="LOAIGIAY" ThisKey="MaLoai" OtherKey="MaLoai" Type="LOAIGIAY" IsForeignKey="true" />
       <Association Name="NHASANXUAT_GIAY" Member="NHASANXUAT" ThisKey="MaNSX" OtherKey="MaNSX" Type="NHASANXUAT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ADMIN" Member="ADMINs">
+    <Type Name="ADMIN">
+      <Column Name="ID" Type="System.String" DbType="NChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="pwd" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="tenacc" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

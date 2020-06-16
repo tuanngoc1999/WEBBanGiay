@@ -80,14 +80,6 @@ namespace MvcBookStore.Models
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<ADMIN> ADMINs
-		{
-			get
-			{
-				return this.GetTable<ADMIN>();
-			}
-		}
-		
 		public System.Data.Linq.Table<CHITIETDONTHANG> CHITIETDONTHANGs
 		{
 			get
@@ -135,67 +127,12 @@ namespace MvcBookStore.Models
 				return this.GetTable<GIAY>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ADMIN")]
-	public partial class ADMIN
-	{
 		
-		private int _ID;
-		
-		private string _pwd;
-		
-		private string _tenacc;
-		
-		public ADMIN()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
-		public int ID
+		public System.Data.Linq.Table<ADMIN> ADMINs
 		{
 			get
 			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pwd", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string pwd
-		{
-			get
-			{
-				return this._pwd;
-			}
-			set
-			{
-				if ((this._pwd != value))
-				{
-					this._pwd = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tenacc", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string tenacc
-		{
-			get
-			{
-				return this._tenacc;
-			}
-			set
-			{
-				if ((this._tenacc != value))
-				{
-					this._tenacc = value;
-				}
+				return this.GetTable<ADMIN>();
 			}
 		}
 	}
@@ -1562,6 +1499,69 @@ namespace MvcBookStore.Models
 		{
 			this.SendPropertyChanging();
 			entity.GIAY = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ADMIN")]
+	public partial class ADMIN
+	{
+		
+		private string _ID;
+		
+		private string _pwd;
+		
+		private string _tenacc;
+		
+		public ADMIN()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="NChar(30) NOT NULL", CanBeNull=false)]
+		public string ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pwd", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string pwd
+		{
+			get
+			{
+				return this._pwd;
+			}
+			set
+			{
+				if ((this._pwd != value))
+				{
+					this._pwd = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tenacc", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string tenacc
+		{
+			get
+			{
+				return this._tenacc;
+			}
+			set
+			{
+				if ((this._tenacc != value))
+				{
+					this._tenacc = value;
+				}
+			}
 		}
 	}
 }
