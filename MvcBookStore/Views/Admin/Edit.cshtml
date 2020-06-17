@@ -1,22 +1,22 @@
 ﻿@model MvcBookStore.Models.GIAY
 
 @{
-    ViewBag.Title = "Thêm mới giày";
+    ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+<h2>Edit</h2>
 
-<h2>Thêm mới giày</h2>
-
-@*@using (Html.BeginForm("ThemmoiGiay","Admin", FormMethod.Post, new {@enctype="multipart/form-data"}))
-{*@
-<form method="post" enctype="multipart/form-data" action="ThemmoiGiay">
-    @*@Html.AntiForgeryToken()*@
-
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
     <div class="form-horizontal">
-        <h4>GIAY</h4>
+ 
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.MaGiay)
+
         <div class="form-group">
             @Html.LabelFor(model => model.TenGiay, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -42,17 +42,18 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Anhbia, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="fileUpload" id="fileUpload"/>
-                @ViewBag.Thongbao
+            @Html.LabelFor(model => model.Anhbia, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">Chọn ảnh mới
+                <input type="file" name="fileUpload"/>
+            <img src="@Url.Content("~/Hinhsanpham/"+ Model.Anhbia)" width="120px"/>(Ảnh hiện tại)
+            @ViewBag.Thongbao
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Ngaycapnhat, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="date" name="Ngaycapnhat" />
+                @Html.EditorFor(model => model.Ngaycapnhat, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Ngaycapnhat, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -68,25 +69,27 @@
         <div class="form-group">
             @Html.LabelFor(model => model.MaNSX, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("MaLoai")
+                @Html.EditorFor(model => model.MaNSX, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MaNSX, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.MaLoai, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("MaNSX")
+                @Html.EditorFor(model => model.MaLoai, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MaLoai, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
-    }
-</form>
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

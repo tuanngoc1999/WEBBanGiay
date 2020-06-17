@@ -23,28 +23,7 @@ namespace MvcBookStore.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public ActionResult Login(FormCollection collection)
-        {
-            var tendn = collection["email"];
-            var matkhau = collection["password"];
-            ADMIN ad = db.ADMINs.SingleOrDefault(n => n.ID == tendn && n.pwd == matkhau);
-            //if (String.IsNullOrEmpty(tendn))
-            //{
-            //    ViewData["Loi1"] = "Phải nhập tên đăng nhập";
-            //}
-            //else if (String.IsNullOrEmpty(matkhau))
-            //{
-            //    ViewData["Loi2"] = "Phải nhập mật khẩu";
-            //}
-            if (ad != null)
-            {
-                Session["AdminAccout"] = ad;
-                return RedirectToAction("Index", "Admin");
-            }
-            else ViewBag.Thongbao = "Email hoặc mật khẩu không đúng!";
-            return View();
-        }
+
         [HttpGet]
         public ActionResult ThemmoiGiay()
         {
@@ -55,16 +34,71 @@ namespace MvcBookStore.Controllers
         [HttpPost]
         public ActionResult ThemmoiGiay(GIAY giay, HttpPostedFileBase fileUpload)
         {
-            var fileName = Path.GetFileName(fileUpload.FileName);
-            var path = Path.Combine(Server.MapPath("~/Hinhsanpham"), fileName);
-            if (System.IO.File.Exists(path))
-            {
-                ViewBag.Thongbao = "Hình ảnh đã tồn tại";
-            }
-            else fileUpload.SaveAs(path);
             ViewBag.MaLoai = new SelectList(db.LOAIGIAYs.ToList().OrderBy(n => n.TenLoai), "MaLoai", "TenLoai");
             ViewBag.MaNSX = new SelectList(db.NHASANXUATs.ToList().OrderBy(n => n.TenNSX), "MaNSX", "TenNSX");
-            return View();
+            if(fileUpload == null)
+            {
+                ViewBag.Thongbao = "Vui lòng chọn ảnh";
+                return View();
+            }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    var fileName = Path.GetFileName(fileUpload.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Hinhsanpham"), fileName);
+                    if (System.IO.File.Exists(path))
+                    {
+                        ViewBag.Thongbao = "Hình ảnh đã tồn tại";
+                    }
+                    else fileUpload.SaveAs(path);
+                    giay.Anhbia = fileName;
+                    db.GIAYs.InsertOnSubmit(giay);
+                    db.SubmitChanges();
+                }
+                return RedirectToAction("Giay");
+            }
+            
+        }
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            GIAY giay = db.GIAYs.SingleOrDefault(n => n.MaGiay == id);
+            if (giay == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            ViewBag.MaLoai = new SelectList(db.LOAIGIAYs.ToList().OrderBy(n => n.TenLoai), "MaLoai", "TenLoai", giay.MaLoai);
+            ViewBag.MaNSX = new SelectList(db.NHASANXUATs.ToList().OrderBy(n => n.TenNSX), "MaNSX", "TenNSX", giay.MaNSX);
+            return View(giay);
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Edit(GIAY g, HttpPostedFileBase fileUpload)
+        {
+            ViewBag.MaLoai = new SelectList(db.LOAIGIAYs.ToList().OrderBy(n => n.TenLoai), "MaLoai", "TenLoai");
+            ViewBag.MaNSX = new SelectList(db.NHASANXUATs.ToList().OrderBy(n => n.TenNSX), "MaNSX", "TenNSX");
+            if(fileUpload == null)
+            {
+                ViewBag.Thongbao = "Vui lòng chọn ảnh bìa";
+                return View();
+            }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    var fileName = Path.GetFileName(fileUpload.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Hinhsanpham"), fileName);
+                    if (System.IO.File.Exists(path))
+                        ViewBag.Thongbao = "Hình ảnh đã tồn tại";
+                    else fileUpload.SaveAs(path);
+                    g.Anhbia = fileName;
+                    UpdateModel(g);
+                    db.SubmitChanges();
+                }             
+            }
+            return RedirectToAction("GIAY");
         }
     }
 }

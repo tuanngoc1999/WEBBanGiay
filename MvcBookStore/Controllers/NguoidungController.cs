@@ -32,6 +32,10 @@ namespace MvcBookStore.Controllers
             var diachi = collection["Diachi"];
             var dienthoai = collection["Dienthoai"];
             var ngaysinh = String.Format("{0:MM/dd/yyyy}",collection["Ngaysinh"]);
+            ADMIN ad = db.ADMINs.SingleOrDefault(n => n.ID == tendn);
+            KHACHHANG khh = db.KHACHHANGs.SingleOrDefault(n => n.Taikhoan == tendn);
+            if (ad != null || khh != null)
+                ViewData["Loi2"] = "Tên đăng nhập đã tồn tại";
             if (String.IsNullOrEmpty(hoten))
             {
                 ViewData["Loi1"] = "Họ tên không được để trống";
@@ -98,15 +102,22 @@ namespace MvcBookStore.Controllers
                 else
                 {
                     KHACHHANG kh = db.KHACHHANGs.SingleOrDefault(n => n.Taikhoan == tendn && n.Matkhau == matkhau);
-                if (kh != null)
-                {
+                ADMIN ad = db.ADMINs.SingleOrDefault(n => n.ID == tendn && n.pwd == matkhau);
+                    if (kh != null)
+                    {
+                        ViewBag.Thongbao = "Đăng nhập thành công";
+                        Session["Taikhoan"] = kh;
+                        return RedirectToAction("Index", "ShopGiay");
+
+                    }
+                    else if(ad != null)
+                    {
                     ViewBag.Thongbao = "Đăng nhập thành công";
                     Session["Taikhoan"] = kh;
-                    return RedirectToAction("Index", "ShopGiay");
-
+                    return RedirectToAction("Giay", "Admin");
                 }
-                else
-                    ViewBag.Thongbao = "Tên đăng nhập hoặc mật khẩu không đúng";
+                    else
+                        ViewBag.Thongbao = "Tên đăng nhập hoặc mật khẩu không đúng";
                 }
             return View();
         }
