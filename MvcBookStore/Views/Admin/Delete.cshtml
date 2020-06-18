@@ -82,8 +82,11 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "GIAY")
+            <input type="submit" value="Delete" class="btn btn-default" /> 
+            <div class="bottom-right">
+                <a class="nav-link" href="/Admin/Giay">  Back
+                </a>
+            </div>
         </div>
     }
 </div>
