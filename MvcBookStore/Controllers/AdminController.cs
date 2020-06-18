@@ -46,7 +46,7 @@ namespace MvcBookStore.Controllers
                 if (ModelState.IsValid)
                 {
                     var fileName = Path.GetFileName(fileUpload.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Hinhsanpham"), fileName);
+                    var path = Path.Combine(Server.MapPath("~/Hinhg"), fileName);
                     if (System.IO.File.Exists(path))
                     {
                         ViewBag.Thongbao = "Hình ảnh đã tồn tại";
@@ -75,13 +75,13 @@ namespace MvcBookStore.Controllers
         }
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(GIAY g, HttpPostedFileBase fileUpload)
+        public ActionResult Edit(GIAY giay, HttpPostedFileBase fileUpload)
         {
             ViewBag.MaLoai = new SelectList(db.LOAIGIAYs.ToList().OrderBy(n => n.TenLoai), "MaLoai", "TenLoai");
             ViewBag.MaNSX = new SelectList(db.NHASANXUATs.ToList().OrderBy(n => n.TenNSX), "MaNSX", "TenNSX");
-            if(fileUpload == null)
+            if (fileUpload == null)
             {
-                ViewBag.Thongbao = "Vui lòng chọn ảnh bìa";
+                ViewBag.Thongbao = "Vui lòng chọn ảnh";
                 return View();
             }
             else
@@ -89,15 +89,66 @@ namespace MvcBookStore.Controllers
                 if (ModelState.IsValid)
                 {
                     var fileName = Path.GetFileName(fileUpload.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Hinhsanpham"), fileName);
+                    var path = Path.Combine(Server.MapPath("~/fastfood/"), fileName);
                     if (System.IO.File.Exists(path))
-                        ViewBag.Thongbao = "Hình ảnh đã tồn tại";
-                    else fileUpload.SaveAs(path);
-                    g.Anhbia = fileName;
-                    UpdateModel(g);
+                        ViewBag.Thongbao = "File đã tồn tại";
+                    else
+                    {
+                        fileUpload.SaveAs(path);
+                    }
+                    giay.Anhbia = fileName;
+                    UpdateModel(giay);
                     db.SubmitChanges();
-                }             
+                }
+                return RedirectToAction("Sanpham");
             }
+        }
+        public ActionResult SPTheoLoaiGiay(int id)
+        {
+            var GIAY = from s in db.GIAYs where s.MaLoai == id select s;
+            return View(GIAY);
+        }
+        public ActionResult SPTheoNSX(int id)
+        {
+            var GIAY = from cd in db.GIAYs where cd.MaNSX == id select cd;
+            return View(GIAY);
+        }
+        public ActionResult DS_ThuongHieu()
+        {
+
+            return View(db.NHASANXUATs.ToList());
+        }
+        public ActionResult Details(int id)
+        {
+            var GIAY = from s in db.GIAYs
+                       where s.MaGiay == id
+                       select s;
+            return View(GIAY.Single());
+        }
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            GIAY g = db.GIAYs.SingleOrDefault(n => n.MaGiay == id);
+            ViewBag.MaSP = g.MaGiay;
+            if (g == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            return View(g);
+        }
+        [HttpPost, ActionName("Delete")]
+        public ActionResult Xacnhan(int id)
+        {
+            GIAY g = db.GIAYs.SingleOrDefault(n => n.MaGiay == id);
+            ViewBag.MaSP = g.MaGiay;
+            if (g == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            db.GIAYs.DeleteOnSubmit(g);
+            db.SubmitChanges();
             return RedirectToAction("GIAY");
         }
     }

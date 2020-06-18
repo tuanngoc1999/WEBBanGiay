@@ -1,14 +1,22 @@
 ﻿using MvcBookStore.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+//using System.ComponentModel.DataAnnotations;
 
 namespace MvcBookStore.Controllers
 {
     public class NguoidungController : Controller
     {
+        public class ExternalLoginConfirmationViewModel
+        {
+            [Required]
+            [Display(Name = "TenDN")]
+            public string TenDN { get; set; }
+        }
         // GET: Nguoidung
         public ActionResult Index()
         {
@@ -86,7 +94,7 @@ namespace MvcBookStore.Controllers
         }
 
         [HttpPost]
-        public ActionResult Dangnhap(FormCollection collection)
+        public ActionResult Dangnhap(FormCollection collection, string returnUrl)
         {
             dbShopGiayDataContextDataContext db = new dbShopGiayDataContextDataContext();
             var tendn = collection["TenDN"];

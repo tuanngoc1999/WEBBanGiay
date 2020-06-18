@@ -35,7 +35,7 @@ namespace MvcBookStore.Controllers
         }
         public ActionResult SPTheoLoaiGiay(int id)
         {
-            var GIAY = from cd in data.GIAYs where cd.MaGiay == id select cd;
+            var GIAY = from s in data.GIAYs where s.MaLoai == id select s;
             return View(GIAY);
         }
         public ActionResult SPTheoNSX(int id)

@@ -11,7 +11,7 @@
                 <td> Tên giày</td>
                 <td> Ảnh bìa</td>
                 <td> Số lượng</td>
-                <td> Đơn giá</td>
+                <td> Đơn giá </td>
                 <td> Thành tiền</td>
                 
             </tr>
@@ -20,13 +20,13 @@
                 <tr style="text-align:center; font-weight:bold">
                     <td>@item.iMaGiay</td>
                     <td>@item.sTenGiay</td>
-                    <td><img src="~/Hinhsanpham/@item.sAnhbia"></td>
+                    <td><img src="~/Hinhsanpham/@item.sAnhbia" width="120px"></td>
                     @using (Html.BeginForm("CapnhatGiohang", "Giohang", new { @iMasp = item.iMaGiay }))
                     {
                         <td>
                             @item.iSoluong
                         </td>
-                        <td>@item.iSoluong</td>
+                        @*<td>@item.iSoluong</td>*@
                         <td>@String.Format("{0:0,0}", item.dDonggia)</td>
                         <td>@String.Format("{0:0,0}", item.dThanhtien)</td>
 

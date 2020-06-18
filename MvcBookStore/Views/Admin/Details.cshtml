@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style type="text/css">
+ </style>
+<h2>THÔNG TIN CHI TIẾT GIÀY</h2>
+<h3>Tên giày: @Model.TenGiay</h3>
+<div>
+    <div style="width:40%" ; float:left; border-left dotted 1px; border-color:azure">
+        <img src="~/Hinhsanpham/@Model.Anhbia" width="100%" />
+    </div>
+    <div style="width:60%; float:left; padding:10px;">
+        <h4 style="font-weight:bold; ">Tên giày: @Model.TenGiay</h4>
+        <p style="text-align:justify"><span style="font-weight:bold">Mô tả: </span>@Model.Mota</p>
+        <p style="font-weight:bold">Giá bán: <span ; font-size:16pt"> @Model.Giaban VND</span></p>
+    </div>
+</div>
+
+

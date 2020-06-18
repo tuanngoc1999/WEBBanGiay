@@ -17,6 +17,7 @@ namespace MvcBookStore.Controllers
             List<Giohang> lstGiohang = Session["Giohang"] as List<Giohang>;
             if (lstGiohang==null)
             {
+
                 lstGiohang = new List<Giohang>();
                 Session["Giohang"] = lstGiohang;
             }
@@ -68,7 +69,7 @@ namespace MvcBookStore.Controllers
             List<Giohang> lstGiohang = Laygiohang();
             if (lstGiohang.Count == 0)
             {
-                return RedirectToAction("Index", "BookStore");
+                return RedirectToAction("Index", "ShopGiay");
             }
             ViewBag.Tongsoluong = TongSoLuong();
             ViewBag.Tongtien = TongTien();
@@ -96,7 +97,7 @@ namespace MvcBookStore.Controllers
             }
             if (lstGiohang.Count == 0)
             {
-                return RedirectToAction("Index", "Bookstore");
+                return RedirectToAction("Index", "ShopGiay");
             }
             return RedirectToAction("GioHang");
         }
@@ -132,7 +133,7 @@ namespace MvcBookStore.Controllers
             }
             if(Session["Giohang"] == null)
             {
-                return RedirectToAction("Index", "BookStore");
+                return RedirectToAction("Index", "ShopGiay");
             }
 
             // lay gio hang tu session

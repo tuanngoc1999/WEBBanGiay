@@ -23,13 +23,13 @@
         <tr style="text-align:center; font-weight:bold">
             <td>@item.iMaGiay</td>
             <td>@item.sTenGiay</td>
-            <td><img src="~/Hinhsanpham/@item.sAnhbia"></td>
+            <td><img src="~/Hinhsanpham/@item.sAnhbia" width="120px"></td>
             @using (Html.BeginForm("CapnhatGiohang", "Giohang", new { @iMasp = item.iMaGiay }))
             {
                 <td>
                     <input type="number" min="1" name="txtSoluong" value="@item.iSoluong" style="background-color:yellow" />
                 </td>
-                <td>@item.iSoluong</td>
+                @*<td>@item.iSoluong</td>*@
                 <td>@String.Format("{0:0,0}", item.dDonggia)</td>
                 <td>@String.Format("{0:0,0}", item.dThanhtien)</td>
                 <td> <a href="@Url.Action("Detail", "Bookstore", new { id = item.iMaGiay })"> Chi tiết </a></td>
@@ -48,7 +48,7 @@
             @Html.ActionLink("Xóa giỏ hàng", "XoaTatcaGiohang")
         </td>
     </tr>
-    <tr style="font-weight: bold; color: blue; text-align:right">
+    <tr style="font-weight: bold; color:cornflowerblue; text-align:left">
         <td colspan="9" align="center">
             @Html.ActionLink("Đặt hàng", "Dathang", "Giohang")
         </td>
