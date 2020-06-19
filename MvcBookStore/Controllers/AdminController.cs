@@ -75,11 +75,11 @@ namespace MvcBookStore.Controllers
         }
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(GIAY giay, HttpPostedFileBase fileUpload)
+        public ActionResult Edit(GIAY giay, HttpPostedFileBase upload)
         {
             ViewBag.MaLoai = new SelectList(db.LOAIGIAYs.ToList().OrderBy(n => n.TenLoai), "MaLoai", "TenLoai");
             ViewBag.MaNSX = new SelectList(db.NHASANXUATs.ToList().OrderBy(n => n.TenNSX), "MaNSX", "TenNSX");
-            if (fileUpload == null)
+            if (upload == null)
             {
                 ViewBag.Thongbao = "Vui lòng chọn ảnh";
                 return View();
@@ -88,19 +88,23 @@ namespace MvcBookStore.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var fileName = Path.GetFileName(fileUpload.FileName);
-                    var path = Path.Combine(Server.MapPath("~/fastfood/"), fileName);
+                    var fileName = Path.GetFileName(upload.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Hinhsanpham"), fileName);
                     if (System.IO.File.Exists(path))
                         ViewBag.Thongbao = "File đã tồn tại";
                     else
                     {
-                        fileUpload.SaveAs(path);
+                        upload.SaveAs(path);
                     }
                     giay.Anhbia = fileName;
                     UpdateModel(giay);
+                    GIAY g1 = new GIAY();
+                    g1 = db.GIAYs.SingleOrDefault(m => m.MaGiay == giay.MaGiay);
+                    db.GIAYs.DeleteOnSubmit(g1);
+                    db.GIAYs.InsertOnSubmit(giay);
                     db.SubmitChanges();
                 }
-                return RedirectToAction("Sanpham");
+                return RedirectToAction("Giay");
             }
         }
         public ActionResult SPTheoLoaiGiay(int id)
